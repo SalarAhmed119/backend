@@ -362,6 +362,38 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiFriendFriend extends Schema.CollectionType {
+  collectionName: 'friends';
+  info: {
+    singularName: 'friend';
+    pluralName: 'friends';
+    displayName: 'friend';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    email: Attribute.Email & Attribute.Required;
+    phoneNumber: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::friend.friend',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::friend.friend',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiStudentStudent extends Schema.CollectionType {
   collectionName: 'students';
   info: {
@@ -828,6 +860,7 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::friend.friend': ApiFriendFriend;
       'api::student.student': ApiStudentStudent;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
